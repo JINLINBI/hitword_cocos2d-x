@@ -1,0 +1,13 @@
+*.o
+ctags
+proj.android
+proj.win32
+proj.ios_mac
+*.swp
+*.key
+linux-build
+Debug
+external
+bin
+cocos2d
+Resources
