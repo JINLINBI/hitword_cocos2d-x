@@ -55,11 +55,19 @@ include_directories(
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
+     Classes/GameScene.cpp
      Classes/HelloWorldScene.cpp
+     Classes/WordSprite.cpp
+     Classes/WordSpriteMgr.cpp
+     Classes/FileMgr.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
+     Classes/GameScene.h
      Classes/HelloWorldScene.h
+     Classes/WordSpriteMgr.h
+     Classes/WordSprite.h
+     Classes/FileMgr.h
      )
 
 if(ANDROID)

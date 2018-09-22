@@ -1,5 +1,5 @@
 *.o
-ctags
+tags
 proj.android
 proj.win32
 proj.ios_mac
