@@ -19,7 +19,8 @@ public:
     bool createANewRandomWord();
     bool addWord(WordSprite*);
     bool removeWord(WordSprite*);
-    int hitWord(const string&);
+    int  hitWord(const string&);
+    void hitWordCallback(Ref*);
 
 protected:
     WordSpriteMgr();

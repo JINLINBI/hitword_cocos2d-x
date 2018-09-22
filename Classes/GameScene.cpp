@@ -22,7 +22,6 @@ static void problemLoading(const char* filename)
 GameScene::GameScene():
     m_wordmgr(nullptr)
 {
-    CCLOG("GameScene construct");
     m_wordmgr = WordSpriteMgr::create();
     if(m_wordmgr == nullptr)
         return;
@@ -94,5 +93,6 @@ void GameScene::onEnter(){
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     m_wordmgr->createANewRandomWord();
+    m_wordmgr->createANewRandomWord();
+    m_wordmgr->createANewRandomWord();
 }
-

@@ -1,3 +1,4 @@
+#include "cocos2d.h"
 #include "HelloWorldScene.h"
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"

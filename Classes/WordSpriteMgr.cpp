@@ -51,16 +51,25 @@ bool WordSpriteMgr::createANewRandomWord(){
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     //CCLOG("random word: %s", m_file.getrandom().c_str());
+    timeval t;
+    gettimeofday(&t, NULL);
+    srand(t.tv_usec);
     WordSprite* word = WordSprite::create(m_file->getrandom());
     word->setPosition(Vec2(origin.x + visibleSize.width + word->getContentSize().width / 2,
-                        origin.y + visibleSize.height / 2));
-    MoveBy* move = MoveBy::create(MOVEBY_TIME, Vec2(-visibleSize.width - word->getContentSize().width, 0));
-    word->runAction(move);
+                        origin.y + LOW_EDGE + rand() % (int)(visibleSize.height - HIGH_EDGE - LOW_EDGE)));
+    MoveBy* move = MoveBy::create(MOVEBY_TIME + DELTA_TIME - rand() % RANDOM_TIME, Vec2(-visibleSize.width - word->getContentSize().width, 0));
+    Sequence* seq = Sequence::create(DelayTime::create( rand() % DELAY_TIME ), move,
+            CallFuncN::create(CC_CALLBACK_1(WordSpriteMgr::hitWordCallback, this)), nullptr);
+    word->runAction(seq);
     //CCLOG("positionX: %f, positionY: %f", word->getAnchorPoint().x, word->getAnchorPoint().y);
     //CCLOG("widht: %f, height: %f", word->getContentSize().width, word->getContentSize().height);
     addWord(word);
 
     return false;
+}
+
+void WordSpriteMgr::hitWordCallback(Ref* pSender){
+    CCLOG("word gone!");
 }
 
 int WordSpriteMgr::hitWord(const string& word){

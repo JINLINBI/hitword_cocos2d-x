@@ -1,5 +1,10 @@
-#define FAILED -1
-#define SUCCESS 0
-#define OKAY 1
-#define WORD_FILENAME "words.txt"
-#define MOVEBY_TIME 2.5f
+#define FAILED          -1
+#define SUCCESS         0
+#define OKAY            1
+#define WORD_FILENAME   "words.txt"
+#define MOVEBY_TIME     5.0f
+#define LOW_EDGE        50
+#define HIGH_EDGE       50
+#define DELTA_TIME      1
+#define RANDOM_TIME     2
+#define DELAY_TIME      2
