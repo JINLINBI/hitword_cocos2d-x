@@ -1,3 +1,4 @@
+#include <string>
 #include "Macros.h"
 #include "HelloWorldScene.h"
 #include "GameScene.h"
@@ -6,6 +7,7 @@
 #include "WordSpriteMgr.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
+using namespace std;
 
 Scene* GameScene::createScene()
 {
@@ -76,6 +78,9 @@ bool GameScene::init()
     //MoveBy* moveby = MoveBy::create(2.0f, Vec2(-(visibleSize.width + label1->getContentSize().width) / 2, 0));
     //label1->runAction(moveby);
     //addChild(label1, 3);
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = CC_CALLBACK_2(GameScene::onKeyPressed, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     return true;
 }
@@ -84,6 +89,28 @@ void GameScene::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->popScene();
+}
+
+void GameScene::onKeyPressed(EventKeyboard::KeyCode keycode, Event* event){
+    if(keycode >= EventKeyboard::KeyCode::KEY_A && keycode <= EventKeyboard::KeyCode::KEY_Z){
+        char a[1] = {'\0'};
+        a[0] = (char)keycode - (char)(EventKeyboard::KeyCode::KEY_A) + 'a';
+        string character(a);
+        int res = m_wordmgr->hitWord(m_curword + character);
+        if(res == FAILED){
+            // Two ways to deal this
+            m_curword.clear();
+            m_wordmgr->clearHitWord();
+        }
+        else if(res == SUCCESS){
+            m_curword.clear();
+            m_wordmgr->clearHitWord();
+            m_wordmgr->createANewRandomWord();
+        }
+        else {
+            m_curword += character;
+        }
+    }
 }
 
 void GameScene::onEnter(){

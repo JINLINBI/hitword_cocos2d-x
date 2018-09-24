@@ -25,6 +25,11 @@ WordSprite* WordSprite::create(const string& s)
     return p;
 }
 
+WordSprite::WordSprite():
+    m_dirty(false)
+{
+}
+
 WordSprite::~WordSprite(){
     removeAllChildren();
 }
@@ -64,12 +69,10 @@ bool WordSprite::createWord(){
 }
 
 int WordSprite::hitWord(const string& s){
-    if(s == m_Word)
-        return SUCCESS;
+    float width = 0, curwidth;
+    LabelBMFont* label;
 
     if(m_Word.find(s) == 0){
-        LabelBMFont* label;
-        float width = 0, curwidth;
         for(int i = 0; i < s.length(); ++i){
             label = LabelBMFont::create(m_Word.substr(i, 1), HIT_FONT);
 
@@ -79,9 +82,30 @@ int WordSprite::hitWord(const string& s){
             label->setPosition(Vec2(width - curwidth, label->getContentSize().height / 2));
             this->addChild(label, 1, i);
         }
+        if(s == m_Word){
+            return SUCCESS;
+        }
 
         return OKAY;
     }
+    clearHitWord();
 
     return FAILED;
+}
+
+void WordSprite::clearHitWord(){
+    float width = 0, curwidth;
+    LabelBMFont* label;
+
+    removeAllChildren();
+    for(int i = 0; i < m_Word.length(); ++i){
+        label = LabelBMFont::create(m_Word.substr(i, 1), ORIGIN_FONT);
+
+        width += label->getContentSize().width;
+        curwidth = label->getContentSize().width / 2;
+        label->setPosition(Vec2(width - curwidth, label->getContentSize().height / 2));
+        this->addChild(label, 1, i);
+    }
+
+    return;
 }

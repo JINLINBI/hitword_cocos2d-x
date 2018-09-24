@@ -8,6 +8,7 @@ using namespace std;
 class WordSprite : public cocos2d::Sprite
 {
 public:
+    WordSprite();
     ~WordSprite();
     virtual bool init();
 
@@ -17,10 +18,11 @@ public:
     static WordSprite* create(const string&);
 
     int hitWord(const string&);
+    void clearHitWord();
 
 private:
     bool createWord();
-
+    bool   m_dirty;
     string m_Word;
 };
 

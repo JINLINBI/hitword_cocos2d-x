@@ -21,6 +21,7 @@ public:
     bool removeWord(WordSprite*);
     int  hitWord(const string&);
     void hitWordCallback(Ref*);
+    void clearHitWord();
 
 protected:
     WordSpriteMgr();

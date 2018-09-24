@@ -110,3 +110,13 @@ bool WordSpriteMgr::removeWord(WordSprite* word){
 
     return OKAY;
 }
+
+void WordSpriteMgr::clearHitWord(){
+    const auto& arrayNode = getChildren();
+    for(auto& child: arrayNode){
+        WordSprite* _word = dynamic_cast<WordSprite*>(child);
+        if(_word){
+            _word->clearHitWord();
+        }
+    }
+}
