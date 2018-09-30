@@ -20,7 +20,7 @@ public:
     bool addWord(WordSprite*);
     bool removeWord(WordSprite*);
     int  hitWord(const string&);
-    void hitWordCallback(Ref*);
+    void  hitWordCallback(Ref*, WordSprite*);
     void clearHitWord();
 
 protected:
@@ -31,6 +31,7 @@ protected:
 private:
     size_t    m_size;
     CFileMgr* m_file;
+    unsigned  m_sound;
 };
 
 #endif

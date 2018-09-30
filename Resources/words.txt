@@ -27,3 +27,13 @@ boost
 vector
 map
 set
+helloworld
+cocos2d
+iostream
+stdarg
+unistd
+sockaddr
+connect
+listen
+accept
+

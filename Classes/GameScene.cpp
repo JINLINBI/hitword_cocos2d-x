@@ -1,4 +1,5 @@
 #include <string>
+#include "cocos2d.h"
 #include "Macros.h"
 #include "HelloWorldScene.h"
 #include "GameScene.h"
@@ -22,7 +23,8 @@ static void problemLoading(const char* filename)
 }
 
 GameScene::GameScene():
-    m_wordmgr(nullptr)
+    m_wordmgr(nullptr),
+    m_sound(0)
 {
     m_wordmgr = WordSpriteMgr::create();
     if(m_wordmgr == nullptr)
@@ -99,27 +101,40 @@ void GameScene::onKeyPressed(EventKeyboard::KeyCode keycode, Event* event){
         int res = m_wordmgr->hitWord(m_curword + character);
         if(res == FAILED){
             // Two ways to deal this
+            CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("fire.wav", false);
             m_curword.clear();
             m_wordmgr->clearHitWord();
         }
         else if(res == SUCCESS){
+            CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("hit.wav", false);
             m_curword.clear();
             m_wordmgr->clearHitWord();
             m_wordmgr->createANewRandomWord();
         }
         else {
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(m_sound);
+            m_sound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("waterdrop.wav", false);
             m_curword += character;
         }
     }
 }
 
 void GameScene::onEnter(){
-    Node::onEnter();
-
+    Scene::onEnter();
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     m_wordmgr->createANewRandomWord();
     m_wordmgr->createANewRandomWord();
     m_wordmgr->createANewRandomWord();
+}
+
+void GameScene::onEnterTransitionDidFinish(){
+    Scene::onEnterTransitionDidFinish();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("gamebackground.mp3", true);
+}
+
+void GameScene::onExit(){
+    Scene::onExit();
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic("gamebackground.mp3");
 }

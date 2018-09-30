@@ -47,11 +47,14 @@ public:
 
     GameScene();
     virtual ~GameScene();
+    virtual void onEnterTransitionDidFinish() override;
+    virtual void onExit() override;
     virtual void onKeyPressed(EventKeyboard::KeyCode, Event*);
 
 private:
     WordSpriteMgr* m_wordmgr;
     string         m_curword;
+    unsigned       m_sound;
 };
 
 #endif // __GAME_SCENE_H__

@@ -3,7 +3,9 @@
 #include "Macros.h"
 #include "WordSprite.h"
 #include "WordSpriteMgr.h"
+#include "GameScene.h"
 #include "FileMgr.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
 using namespace std;
 
@@ -59,7 +61,7 @@ bool WordSpriteMgr::createANewRandomWord(){
                         origin.y + LOW_EDGE + rand() % (int)(visibleSize.height - HIGH_EDGE - LOW_EDGE)));
     MoveBy* move = MoveBy::create(MOVEBY_TIME + DELTA_TIME - rand() % RANDOM_TIME, Vec2(-visibleSize.width - word->getContentSize().width, 0));
     Sequence* seq = Sequence::create(DelayTime::create( rand() % DELAY_TIME ), move,
-            CallFuncN::create(CC_CALLBACK_1(WordSpriteMgr::hitWordCallback, this)), nullptr);
+            CallFuncN::create(CC_CALLBACK_1(WordSpriteMgr::hitWordCallback, this, word)), nullptr);
     word->runAction(seq);
     //CCLOG("positionX: %f, positionY: %f", word->getAnchorPoint().x, word->getAnchorPoint().y);
     //CCLOG("widht: %f, height: %f", word->getContentSize().width, word->getContentSize().height);
@@ -68,8 +70,10 @@ bool WordSpriteMgr::createANewRandomWord(){
     return false;
 }
 
-void WordSpriteMgr::hitWordCallback(Ref* pSender){
-    CCLOG("word gone!");
+void WordSpriteMgr::hitWordCallback(Ref* pSender, WordSprite* word){
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("break.wav");
+    createANewRandomWord();
+    removeWord(word);
 }
 
 int WordSpriteMgr::hitWord(const string& word){
